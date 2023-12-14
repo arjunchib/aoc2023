@@ -1,9 +1,13 @@
 import input from "./input.txt";
 
-export function day12(input: string): number {
+export function day12(input: string, unfold = false): number {
   const values = input.split("\n").map((line) => {
     if (!line) return 0;
-    const [arrangement, conditions] = line.split(" ");
+    let [arrangement, conditions] = line.split(" ");
+    if (unfold) {
+      arrangement = Array(5).fill(arrangement).join("?");
+      conditions = Array(5).fill(conditions).join(",");
+    }
     const conditionRecord = conditions.split(",").map((x) => parseInt(x));
     return day12Recursive(arrangement, conditionRecord);
   });
@@ -29,6 +33,29 @@ function day12Recursive(
   }
 }
 
+function matchConditions(
+  partial: string,
+  conditions: number[]
+): [number, number[]] | false {
+  const groups = partial
+    .split(".")
+    .map((g) => g.length)
+    .filter((g) => g > 0);
+  if (groups.length > conditions.length) return false;
+  for (let i = 0; i < groups.length - 1; i++) {
+    if (groups[i] !== conditions[i]) return false;
+    conditions.shift();
+  }
+  let total = groups.length - 1;
+  if (groups[groups.length] === conditions[0]) {
+    total += 1;
+    conditions.unshift();
+  } else if (groups[groups.length] > conditions[0]) {
+    return false;
+  }
+  return [total, conditions];
+}
+
 function isValidPartial(
   partialArrangement: string,
   conditionRecord: number[]
@@ -49,5 +76,6 @@ function isValid(arrangement: string, conditionRecord: number[]): boolean {
   return groups.every((g, i) => g.length === conditionRecord[i]);
 }
 
-console.log(`part1: ${day12(input)}`);
-console.log(`part2: ${day12(input)}`);
+// console.log(`part1: ${day12(input)}`);
+// console.log(`part2: ${day12(input)}`);
+day12("????.#...#... 4,1,1", true);
