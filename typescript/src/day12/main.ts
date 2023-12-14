@@ -66,7 +66,9 @@ function isValidPartial(
     .filter((g) => g > 0);
   if (groups.length > conditionRecord.length) return false;
   return groups.every((g, i) =>
-    i === groups.length - 1 ? g <= conditionRecord[i] : g === conditionRecord[i]
+    i === groups.length - 1 && partialArrangement.endsWith("#")
+      ? g <= conditionRecord[i]
+      : g === conditionRecord[i]
   );
 }
 
