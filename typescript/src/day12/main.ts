@@ -9,9 +9,22 @@ export function day12(input: string, unfold = false): number {
       conditions = Array(5).fill(conditions).join(",");
     }
     const conditionRecord = conditions.split(",").map((x) => parseInt(x));
+
     return day12Recursive(arrangement, conditionRecord);
   });
   return values.reduce((a, b) => a + b);
+}
+
+function allPossibilities(arrangement: string): number[][] {
+  return arrangement.split(".").map((part) => {
+    if (!part) {
+      return [];
+    } else if (!part.includes("?")) {
+      return [part.length];
+    } else {
+      return [];
+    }
+  });
 }
 
 function day12Recursive(
