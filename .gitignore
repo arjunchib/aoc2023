@@ -177,3 +177,6 @@ dist
 # Zig
 zig-cache/
 zig-out
+
+# ocaml
+_build
