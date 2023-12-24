@@ -1,1 +1,1 @@
-(executable (name day3))
+(executables (names day3_1 day3_2))
