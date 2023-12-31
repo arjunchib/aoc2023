@@ -1,1 +1,3 @@
-(executables (names day5_1 day5_2))
+(executables
+  (names day5_1 day5_2)
+  (libraries str))
