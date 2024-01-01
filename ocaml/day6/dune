@@ -1,0 +1,3 @@
+(executables
+  (names day6_1 day6_2)
+  (libraries str))
